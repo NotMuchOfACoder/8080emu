@@ -59,3 +59,19 @@
     }    
     return 0;    
    }    
+   int Emulate8080Op(State8080* state)    
+   {    
+       unsigned char *opcode = &state->memory[state->pc];    
+       Disassemble8080Op(state->memory, state->pc);    
+       switch (*opcode)    
+       {    
+           case 0x00:   //NOP    
+           /* ... */    
+       }    
+       /* print out processor state */    
+       printf("\tC=%d,P=%d,S=%d,Z=%d\n", state->cc.cy, state->cc.p,    
+           state->cc.s, state->cc.z);    
+       printf("\tA $%02x B $%02x C $%02x D $%02x E $%02x H $%02x L $%02x SP %04x\n",    
+           state->a, state->b, state->c, state->d,    
+           state->e, state->h, state->l, state->sp);    
+   }    
