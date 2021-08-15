@@ -78,3 +78,42 @@
    219          case 0xc3: printf("JMP    $%02x%02x",code[2],code[1]); opbytes = 3; break;    
    (gdb)    
    285      printf("\n");    
+   #use the /c modifier to get gdb to interpret the input as signed    
+   (gdb) print /c 0xFD    
+   $1 = -3 '?'    
+
+   #use the /x modifier to get gdb print the result as hexidecimal    
+   #switching to "p" instead of typing out "print"    
+   (gdb) p /c 0xA    
+   $2 = 10 '\n'    
+
+   #These are the numbers from Example 2 in the two's complement section    
+   (gdb) p /c 0xC5    
+   $3 = -59 '?'    
+   (gdb) p /c 0xC5+0x21    
+   $4 = -26 '?'    
+
+   #if you print without a modifier, gdb will respond in decimal    
+   (gdb) p 0x21    
+   $9 = 33    
+
+   #These are the negative numbers from above, but if I don't tell gdb    
+   #They are signed, it treats them as unsigned    
+   (gdb) p  0xc5    
+   $5 = 197     #unsigned    
+   (gdb) p /c 0xc5    
+   $3 = -59 '?' #signed    
+   (gdb) p 0xfd    
+   $6 = 253    
+
+   #It will also tell you the two's complement representation (it defaults to 32 bits integer)    
+   (gdb) p /x -3    
+   $7 = 0xfffffffd    
+
+   # 1 byte-sized data treated as signed    
+   (gdb) print (char) 0xff    
+   $1 = -1 '?'    
+   # 1 byte-sized data treated as unsigned    
+   (gdb) print (unsigned char) 0xff    
+   $2 = 255 '?'    
+
